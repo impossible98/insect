@@ -5,4 +5,4 @@ RUN yarn --pure-lockfile && \
     yarn cache clean
 COPY . .
 EXPOSE 9191
-ENTRYPOINT [ "./node_modules/.bin/live-server","src", "--open"]
+ENTRYPOINT ["yarn", "start"]
