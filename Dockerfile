@@ -1,6 +1,7 @@
 FROM node:12-alpine
 WORKDIR /home/insect
 COPY package.json ./
+ARG GITHUB_TOKEN
 RUN yarn --pure-lockfile && \
     yarn cache clean
 COPY . .
