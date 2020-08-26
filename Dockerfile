@@ -1,7 +1,8 @@
 FROM node:12-alpine
 WORKDIR /home/insect
-ADD package.json ./package.json
+COPY package.json ./
 RUN yarn --pure-lockfile && \
     yarn cache clean
-EXPOSE 3001
-ENTRYPOINT [ "live-server","src", "--open"]
+COPY . .
+EXPOSE 8080
+CMD [ "./node_modules/.bin/live-server","src", "--open"]
