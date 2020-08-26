@@ -72,6 +72,7 @@
 
         if (res.msgType === "error") {
           ga('send', 'event', 'user-input', 'error', line);
+        //   return "Error"
         } else {
           ga('send', 'event', 'user-input', 'success', line);
         }
@@ -89,21 +90,14 @@
         return "[[;#" + col + ";]" + str + "]";
       }
 
-      var visitedBefore = localStorage.getItem("visitedBefore") === "yes";
-      var greeting = "";
-      if (!visitedBefore) {
-        greeting = colored("75715E", "Welcome to insect. Type '?' if this is your first visit.");
-        localStorage.setItem("visitedBefore", "yes");
-      } else {
-        greeting = colored("75715E", "Welcome to insect. Enter '?' for help.");
-      }
+      let greeting = "[[;#75715E;]Welcome to insect. Enter '?' for help.]";
 
       $(document).ready(function() {
-        var term = $('#terminal').terminal(interpret, {
+        let term = $('#terminal').terminal(interpret, {
           greetings: greeting,
           name: "terminal",
-          height: 550,
-          prompt: "[[;;;prompt]&#8811; ]",
+          height: 600,
+          prompt: "> ",
           clear: false, // do not include 'clear' command
           exit: false, // do not include 'exit' command
           checkArity: false,
