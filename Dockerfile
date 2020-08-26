@@ -5,4 +5,4 @@ RUN yarn --pure-lockfile && \
     yarn cache clean
 COPY . .
 EXPOSE 8080
-CMD [ "./node_modules/.bin/live-server","src", "--open"]
+ENTRYPOINT [ "./node_modules/.bin/live-server","src", "--open"]
