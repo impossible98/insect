@@ -4,4 +4,4 @@ ADD package.json ./package.json
 RUN yarn --pure-lockfile && \
     yarn cache clean
 EXPOSE 3001
-ENTRYPOINT [ "yarn", "live-server","src", "--open"]
+ENTRYPOINT [ "live-server","src", "--open"]
