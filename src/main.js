@@ -1,4 +1,4 @@
-var liveServer = require('live-server');
+var liveServer = require('./utils/index.js');
 
 var params = {
     port: 9191,
