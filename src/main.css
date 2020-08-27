@@ -1,6 +1,6 @@
 @font-face {
     font-family: menlo;
-    src: url("/fonts/Menlo-Regular.woff2");
+    src: url("assets/fonts/Menlo-Regular.woff2");
   }
 
 html, body {
@@ -16,8 +16,7 @@ body {
 }
 
 #content {
-    max-width: 90%;
-    /* width: 850px; */
+    width: 90%;
     padding-left: 20px;
     padding-right: 20px;
     margin: 0 auto;
@@ -73,11 +72,8 @@ p.desc {
 
 .prompt {
     font-weight: bold;
-    /* workaround for https://github.com/sharkdp/insect/issues/78 */
     letter-spacing: 1px;
 }
-
-/* syntax highlighting */
 
 .hl-emphasized {
     font-weight: 700 !important;

@@ -4,48 +4,43 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="terminal.css" rel="stylesheet">
-    <link href="main.css" rel="stylesheet">
+    <link rel="stylesheet" href="terminal.css">
+    <link rel="stylesheet" href="main.css">
     <link rel="icon" type="image/png" href="media/insect-196x196.png" sizes="196x196">
     <link rel="icon" type="image/png" href="media/insect-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="media/insect-16x16.png" sizes="16x16">
-    <script src="insect.js" type="text/javascript"></script>
-    <script src="keyboardevent-key-polyfill.js" type="text/javascript"></script>
-    <script src="jquery.min.js" type="text/javascript"></script>
-    <script src="jquery.terminal.min.js" type="text/javascript"></script>
-    <script src="jquery.mousewheel-min.js" type="text/javascript"></script>
+    <script src="insect.js"></script>
+    <script src="keyboardevent-key-polyfill.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.terminal.min.js"></script>
+    <script src="jquery.mousewheel-min.js"></script>
     <script>
         keyboardeventKeyPolyfill.polyfill();
 
-        var insectEnv = Insect.initialEnvironment;
-        var clearCommands = ["clear", "cls", "quit", "exit"];
+        let insectEnv = Insect.initialEnvironment;
+        let clearCommands = ["clear", "cls", "quit", "exit"];
 
         function updateUrl(url) {
             history.replaceState(null, null, url);
         }
 
         function interpret(line) {
-            // Skip empty lines or line comments
-            var lineTrimmed = line.trim();
+            let lineTrimmed = line.trim();
             if (lineTrimmed === "" || lineTrimmed[0] === "#") {
                 return;
             }
 
-            // Run insect
-            var res = Insect.repl(Insect.fmtJqueryTerminal)(insectEnv)(line);
+            let res = Insect.repl(Insect.fmtJqueryTerminal)(insectEnv)(line);
             insectEnv = res.newEnv;
 
-            // Handle shell commands
             if (clearCommands.indexOf(res.msgType) >= 0) {
                 updateUrl("");
             }
 
             if (res.msgType == "clear") {
-                // Clear screen:
                 this.clear();
                 return "";
             } else if (res.msgType == "quit") {
-                // Treat as reset:
                 this.clear();
                 insectEnv = Insect.initialEnvironment;
                 return "";
@@ -67,25 +62,23 @@
             return "[[;#" + col + ";]" + str + "]";
         }
 
-        let greeting = "[[;#75715E;]Welcome to insect. Enter '?' for help.]";
-
         $(document).ready(function () {
             let term = $('#terminal').terminal(interpret, {
-                greetings: greeting,
+                greetings: "[[;#75715E;]Welcome to insect. Enter '?' for help.]",
                 name: "terminal",
                 height: 600,
                 prompt: "> ",
-                clear: false, // do not include 'clear' command
-                exit: false, // do not include 'exit' command
+                clear: false,
+                exit: false,
                 checkArity: false,
                 historySize: 200,
                 historyFilter: function (line) {
                     return line.trim() !== "";
                 },
                 completion: function (inp, cb) {
-                    var identifiers = Insect.identifiers(insectEnv);
+                    let identifiers = Insect.identifiers(insectEnv);
 
-                    var keywords =
+                    let keywords =
                         identifiers.concat(Insect.functions(insectEnv))
                             .concat(Insect.supportedUnits)
                             .concat(Insect.commands);
